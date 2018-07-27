@@ -12,8 +12,8 @@ def main():
 
 def getParam(param_name):
     parser = SafeConfigParser()
-    parser.read('mysql', configfile)
-    return parser.get(param_name)
+    parser.read(configfile)
+    return parser.get('mysql', param_name)
 
 if __name__ == '__main__':
     main()
