@@ -16,20 +16,21 @@ def main():
     print getParam("init", "version")
     print getParam("init", "path")
 
-    downloadWP()
+    version = getParam("init", "version")
+
+    downloadWP(version)
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
     parser.read(configfile)
     return parser.get(section, param_name)
 
-def downloadWP():
-    ver = getParam("init", "version")
+def downloadWP(ver):
     # https://ja.wordpress.org/latest-ja.tar.gz
     # https://ja.wordpress.org/wordpress-4.9.7-ja.tar.gz
     url = "https://ja.wordpress.org/"
 
-    regex = r'^\d\.\d+.\d+$'
+    regex = r'\d\.\d+.\d+'
     print re.match(regex, ver)
     if re.match(regex, ver):
         filename = "wordpress-" + ver + "-ja.tar.gz"
