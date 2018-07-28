@@ -37,7 +37,7 @@ def downloadWP():
 
     print tmpdir + url + filename
 
-    urllib.request.urlretrieve(url, tmpdir + url + filename)
+    urllib.urlretrieve(url, tmpdir + url + filename)
 
 if __name__ == '__main__':
     main()
