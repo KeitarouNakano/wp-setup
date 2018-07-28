@@ -29,7 +29,7 @@ def downloadWP():
     # https://ja.wordpress.org/wordpress-4.9.7-ja.tar.gz
     url = "https://ja.wordpress.org/"
 
-    regex = r'^\d\.\d\+.\d+$'
+    regex = r'^\d\.\d+.\d+$'
     print re.match(regex, ver)
     if re.match(regex, ver):
         filename = "wordpress-" + ver + "-ja.tar.gz"
