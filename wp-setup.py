@@ -41,8 +41,10 @@ def getWP(ver, path):
     print tmpdir + filename
 
     # download wordpress and untar
+    print "downloading... " + url + filename
     urllib.urlretrieve(url + filename, tmpdir + filename)
     untar(tmpdir + filename)
+    print "done."
 
     # copy to setup directory
     if(not os.path.isdir(path)):
@@ -55,10 +57,11 @@ def getWP(ver, path):
     srcdir = tmpdir + "wordpress/"
     files = os.listdir(srcdir)
     for fname in files:
-        print "copy from : " + srcdir + fname + " to " + path
+        print "copy from " + srcdir + fname + " to " + path
         shutil.move(srcdir + fname, path)
 
-    #os.remove(tmpdir + filename)
+    os.remove(tmpdir + filename)
+    os.removedirs(tmpdir + "wordpress/")
 
 def untar(fname):
     if (fname.endswith("tar.gz")):
