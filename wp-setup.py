@@ -2,7 +2,9 @@
 #-*- coding: utf-8 -*-
 
 import sys
+import os
 import re
+import shutil
 import urllib
 import tarfile
 from ConfigParser import SafeConfigParser
@@ -18,18 +20,19 @@ def main():
     print getParam("init", "path")
 
     version = getParam("init", "version")
-    downloadWP(version)
+    path = getParam("init", "path")
+
+    getWP(version, path)
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
     parser.read(configfile)
     return parser.get(section, param_name)
 
-def downloadWP(ver):
+def getWP(ver, path):
     url = "https://ja.wordpress.org/"
 
     regex = r'\d\.\d+.\d+'
-
     if re.match(regex, ver):
         filename = "wordpress-" + ver + "-ja.tar.gz"
     else :
@@ -37,16 +40,30 @@ def downloadWP(ver):
 
     print tmpdir + filename
 
+    # download wordpress and untar
     urllib.urlretrieve(url + filename, tmpdir + filename)
-
     untar(tmpdir + filename)
+
+    # copy to setup directory
+    if(not os.path.isdir(path)):
+        print path + " is not directory."
+        sys.exit(1)
+
+    if(not path.endswith("/")):
+        path = path + "/"
+
+    srcdir = tmpdir + "wordpress/"
+    files = os.listdir(srcdir)
+    for fname in files:
+        shutil.copy(fname, path)
+
+    #os.remove(tmpdir + filename)
 
 def untar(fname):
     if (fname.endswith("tar.gz")):
         tar = tarfile.open(fname)
-        tar.extractall()
+        tar.extractall(tmpdir)
         tar.close()
-        print "Extracted in Current Directory"
     else:
         print "Not a tar.gz file: " + fname
 
