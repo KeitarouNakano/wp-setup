@@ -15,6 +15,8 @@ def main():
     print getParam("mysql", "host")
     print getParam("init", "path")
 
+    downloadWP()
+
 def getParam(section, param_name):
     parser = SafeConfigParser()
     parser.read(configfile)
