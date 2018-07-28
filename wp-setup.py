@@ -3,7 +3,7 @@
 
 import sys
 import re
-import urllib2
+import urllib
 from ConfigParser import SafeConfigParser
 
 configfile = 'config.ini'
@@ -31,13 +31,13 @@ def downloadWP():
     regex = r'^\d\.\d\+.\d+$'
 
     if re.match(regex, ver):
-        url += "wordpress-" + ver + "-ja.tar.gz"
+        filename = "wordpress-" + ver + "-ja.tar.gz"
     else :
-        url += "latest-ja.tar.gz"
+        filename = "latest-ja.tar.gz"
 
-    print url
+    print tmpdir + url + filename
 
-    urllib2.request.urlretrieve(url, tmpdir + "latest-ja.tar.gz")
+    urllib.request.urlretrieve(url, tmpdir + url + filename)
 
 if __name__ == '__main__':
     main()
