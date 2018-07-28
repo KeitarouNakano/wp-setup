@@ -26,8 +26,6 @@ def getParam(section, param_name):
     return parser.get(section, param_name)
 
 def downloadWP(ver):
-    # https://ja.wordpress.org/latest-ja.tar.gz
-    # https://ja.wordpress.org/wordpress-4.9.7-ja.tar.gz
     url = "https://ja.wordpress.org/"
 
     regex = r'\d\.\d+.\d+'
