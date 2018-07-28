@@ -3,7 +3,7 @@
 
 import sys
 import re
-import urllib.request
+import urllib2.request
 from ConfigParser import SafeConfigParser
 
 configfile = 'config.ini'
@@ -35,7 +35,7 @@ def downloadWP():
 
     print url
 
-    urllib.request.urlretrieve(url, tmpdir + "latest-ja.tar.gz")
+    urllib2.request.urlretrieve(url, tmpdir + "latest-ja.tar.gz")
 
 if __name__ == '__main__':
     main()
