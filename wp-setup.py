@@ -62,7 +62,7 @@ def getWP(ver, path):
 
     print "delete tmp file. " + tmpdir + filename
     os.remove(tmpdir + filename)
-    
+
     print "delete tmp dir. " + tmpdir + "wordpress/"
     os.removedirs(tmpdir + "wordpress/")
 
