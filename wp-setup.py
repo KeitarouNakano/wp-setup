@@ -3,7 +3,7 @@
 
 import sys
 import re
-import urllib2.request
+import urllib2
 from ConfigParser import SafeConfigParser
 
 configfile = 'config.ini'
