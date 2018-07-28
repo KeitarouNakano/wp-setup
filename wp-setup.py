@@ -35,7 +35,7 @@ def downloadWP():
     else :
         filename = "latest-ja.tar.gz"
 
-    print tmpdir + url + filename
+    print tmpdir + filename
 
     urllib.urlretrieve(url + filename, tmpdir + filename)
 
