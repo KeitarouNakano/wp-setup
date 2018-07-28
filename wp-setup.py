@@ -55,7 +55,7 @@ def getWP(ver, path):
     srcdir = tmpdir + "wordpress/"
     files = os.listdir(srcdir)
     for fname in files:
-        shutil.copy(srcdir + fname, path)
+        shutil.move(srcdir + fname, path)
 
     #os.remove(tmpdir + filename)
 
