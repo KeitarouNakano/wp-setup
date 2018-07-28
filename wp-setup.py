@@ -4,6 +4,7 @@
 import sys
 import re
 import urllib
+import tarfile
 from ConfigParser import SafeConfigParser
 
 configfile = 'config.ini'
@@ -17,7 +18,6 @@ def main():
     print getParam("init", "path")
 
     version = getParam("init", "version")
-
     downloadWP(version)
 
 def getParam(section, param_name):
@@ -29,7 +29,7 @@ def downloadWP(ver):
     url = "https://ja.wordpress.org/"
 
     regex = r'\d\.\d+.\d+'
-    print re.match(regex, ver)
+
     if re.match(regex, ver):
         filename = "wordpress-" + ver + "-ja.tar.gz"
     else :
@@ -38,6 +38,17 @@ def downloadWP(ver):
     print tmpdir + filename
 
     urllib.urlretrieve(url + filename, tmpdir + filename)
+
+    untar(tmpdir + filename)
+
+def untar(fname):
+    if (fname.endswith("tar.gz")):
+        tar = tarfile.open(fname)
+        tar.extractall()
+        tar.close()
+        print "Extracted in Current Directory"
+    else:
+        print "Not a tar.gz file: " + fname
 
 if __name__ == '__main__':
     main()
