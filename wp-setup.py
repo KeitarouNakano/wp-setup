@@ -13,6 +13,7 @@ def main():
     print getParam("mysql", "user")
     print getParam("mysql", "password")
     print getParam("mysql", "host")
+    print getParam("init", "version")
     print getParam("init", "path")
 
     downloadWP()
@@ -29,7 +30,7 @@ def downloadWP():
     url = "https://ja.wordpress.org/"
 
     regex = r'^\d\.\d\+.\d+$'
-
+    print re.match(regex, ver)
     if re.match(regex, ver):
         filename = "wordpress-" + ver + "-ja.tar.gz"
     else :
