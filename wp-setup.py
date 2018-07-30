@@ -33,11 +33,11 @@ def main():
         path = path + "/"
     print path
 
-    #getWP(version, path)
+    getWP(version, path)
 
     salt = getSalt()
     print salt[0]
-    #replaceWPData(params, salt)
+    replaceWPConfig(params, salt)
 
 
 def getParam(section, param_name):
@@ -45,12 +45,35 @@ def getParam(section, param_name):
     parser.read(configfile)
     return parser.get(section, param_name)
 
-def replaceWPData(params, salt):
+def replaceWPConfig(params, salt):
 
     f_input = open(path + 'wp-config-sample.php')
     f_output = open(path + 'wp-config.php', 'w')
 
     for line in f_input:
+        if re.match(r'.*DB_NAME.*', line):
+            line = "define('DB_NAME', '" + params["user"] + "');"
+        elif re.match(r'.*DB_USER.*', line):
+            line = "define('DB_PASSWORD', '" + params["password"] + "');"
+        elif re.match(r'.*DB_HOST.*', line):
+            line = "define('DB_HOST', '" + params["host"] + "');"
+        elif re.match(r'.*AUTH_KEY.*', line):
+            line = salt[0]
+        elif re.match(r'.*SECURE_AUTH_KEY.*', line):
+            line = salt[1]
+        elif re.match(r'.*LOGGED_IN_KEY.*', line):
+            line = salt[2]
+        elif re.match(r'.*NONCE_KEY.*', line):
+            line = salt[3]
+        elif re.match(r'.*AUTH_SALT.*', line):
+            line = salt[4]
+        elif re.match(r'.*.SECURE_AUTH_SALT*', line):
+            line = salt[5]
+        elif re.match(r'.*LOGGED_IN_SALT.*', line):
+            line = salt[6]
+        elif re.match(r'.*NONCE_SALT.*', line):
+            line = salt[7]
+
         f_output.write(line)
 
     f_input.close()
