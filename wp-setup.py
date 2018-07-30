@@ -36,7 +36,7 @@ def main():
     #getWP(version, path)
 
     salt = getSalt()
-    salt[0][0]
+    salt[0]
     print salt
     #replaceWPData(params, salt)
 
@@ -58,7 +58,7 @@ def replaceWPData(params, salt):
     f_output.close()
 
 def getSalt():
-    salt = urllib.urlopen(salturl).read().split()
+    salt = urllib.urlopen(salturl).read().split("\n")
 
     return salt
 
