@@ -50,38 +50,38 @@ def replaceWPConfig(path, params, salt):
     f_output = open(path + 'wp-config.php', 'w')
 
     for line in f_input:
-        if re.match(r'.*DB_NAME.*', line):
-            line = "define('DB_NAME', '" + params["user"] + "');"
+        if re.match(r"define\('DB_NAME", line):
+            line = "define('DB_NAME', '" + params["user"] + "');" + '\n'
 
-        elif re.match(r'.*DB_USER.*', line):
-            line = "define('DB_PASSWORD', '" + params["password"] + "');"
+        elif re.match(r"define\('DB_USER", line):
+            line = "define('DB_PASSWORD', '" + params["password"] + "');" + '\n'
 
-        elif re.match(r'.*DB_HOST.*', line):
-            line = "define('DB_HOST', '" + params["host"] + "');"
+        elif re.match(r"define\('DB_HOST", line):
+            line = "define('DB_HOST', '" + params["host"] + "');" + '\n'
 
         elif re.match(r"define\('AUTH_KEY'", line):
-            line = salt[0]
+            line = salt[0] + '\n'
 
         elif re.match(r"define\('SECURE_AUTH_KEY'", line):
-            line = salt[1]
+            line = salt[1] + '\n'
 
         elif re.match(r"define\('LOGGED_IN_KEY'", line):
-            line = salt[2]
+            line = salt[2] + '\n'
 
         elif re.match(r"define\('NONCE_KEY'", line):
-            line = salt[3]
+            line = salt[3] + '\n'
 
         elif re.match(r"define\('AUTH_SALT'", line):
-            line = salt[4]
+            line = salt[4] + '\n'
 
         elif re.match(r"define\('SECURE_AUTH_SALT'", line):
-            line = salt[5]
+            line = salt[5] + '\n'
 
         elif re.match(r"define\('LOGGED_IN_SALT'", line):
-            line = salt[6]
+            line = salt[6] + '\n'
 
         elif re.match(r"define\('NONCE_SALT'", line):
-            line = salt[7]
+            line = salt[7] + '\n'
 
         f_output.write(line)
 
