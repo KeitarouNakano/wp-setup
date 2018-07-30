@@ -56,21 +56,21 @@ def replaceWPConfig(path, params, salt):
             line = "define('DB_PASSWORD', '" + params["password"] + "');"
         elif re.match(r'.*DB_HOST.*', line):
             line = "define('DB_HOST', '" + params["host"] + "');"
-        elif re.match(r'.*AUTH_KEY.*', line):
+        elif re.match(r"define('AUTH_KEY'", line):
             line = salt[0]
-        elif re.match(r'.*SECURE_AUTH_KEY.*', line):
+        elif re.match(r"define('SECURE_AUTH_KEY'", line):
             line = salt[1]
-        elif re.match(r'.*LOGGED_IN_KEY.*', line):
+        elif re.match(r"define('LOGGED_IN_KEY'", line):
             line = salt[2]
-        elif re.match(r'.*NONCE_KEY.*', line):
+        elif re.match(r"define('NONCE_KEY'", line):
             line = salt[3]
-        elif re.match(r'.*AUTH_SALT.*', line):
+        elif re.match(r"define('AUTH_SALT'", line):
             line = salt[4]
-        elif re.match(r'.*.SECURE_AUTH_SALT*', line):
+        elif re.match(r"define('SECURE_AUTH_SALT'", line):
             line = salt[5]
-        elif re.match(r'.*LOGGED_IN_SALT.*', line):
+        elif re.match(r"define('LOGGED_IN_SALT'", line):
             line = salt[6]
-        elif re.match(r'.*NONCE_SALT.*', line):
+        elif re.match(r"define('NONCE_SALT'", line):
             line = salt[7]
 
         f_output.write(line)
