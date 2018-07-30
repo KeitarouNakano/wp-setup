@@ -36,7 +36,7 @@ def main():
     getWP(version, path)
 
     salt = getSalt()
-    replaceWPConfig(params, salt)
+    replaceWPConfig(path, params, salt)
 
 
 def getParam(section, param_name):
@@ -44,9 +44,8 @@ def getParam(section, param_name):
     parser.read(configfile)
     return parser.get(section, param_name)
 
-def replaceWPConfig(params, salt):
+def replaceWPConfig(path, params, salt):
 
-    print "path:" + path
     f_input = open(path + 'wp-config-sample.php')
     f_output = open(path + 'wp-config.php', 'w')
 
