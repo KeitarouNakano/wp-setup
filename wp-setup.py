@@ -11,6 +11,8 @@ from ConfigParser import SafeConfigParser
 
 configfile = 'config.ini'
 tmpdir = '/tmp/'
+salturl = 'https://api.wordpress.org/secret-key/1.1/salt/'
+path = ''
 
 def main():
     print getParam("mysql", "user")
@@ -22,14 +24,48 @@ def main():
     version = getParam("init", "version")
     path = getParam("init", "path")
 
+    params = {\
+        'user', getParam("mysql", "user"), \
+        'host', getParam("mysql", "host"), \
+        'password', getParam("mysql", "password")
+    }
+
+    if(not path.endswith("/")):
+        path = path + "/"
+
     getWP(version, path)
+
+    #replaceWPData(params)
+    salt = getSalt()
+    print salt
+
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
     parser.read(configfile)
     return parser.get(section, param_name)
 
+def replaceWPData(params):
+
+    f_input = open(path + 'wp-config-sample.php')
+    f_output = open(path + 'wp-config.php', 'w')
+
+    for line in f_input:
+        f_output.write(line)
+
+    f_input.close()
+    f_output.close()
+
+def getSalt():
+    salt = urllib.request.urlopen(salturl).read()
+    return salt
+
 def getWP(ver, path):
+
+    if(not os.path.isdir(path)):
+        print path + " is not directory or no such directory."
+        sys.exit(1)
+
     url = "https://ja.wordpress.org/"
 
     regex = r'\d\.\d+.\d+'
@@ -46,13 +82,7 @@ def getWP(ver, path):
     untar(tmpdir + filename)
     print "done."
 
-    # copy to setup directory
-    if(not os.path.isdir(path)):
-        print path + " is not directory."
-        sys.exit(1)
-
-    if(not path.endswith("/")):
-        path = path + "/"
+    # move to setup directory
 
     srcdir = tmpdir + "wordpress/"
     files = os.listdir(srcdir)
