@@ -24,6 +24,7 @@ def main():
     path = getParam("init", "path")
 
     params = {\
+        'dbname': getParam("mysql", "dbname"), \
         'user': getParam("mysql", "user"), \
         'host': getParam("mysql", "host"), \
         'password': getParam("mysql", "password")
@@ -51,9 +52,12 @@ def replaceWPConfig(path, params, salt):
 
     for line in f_input:
         if re.match(r"define\('DB_NAME", line):
-            line = "define('DB_NAME', '" + params["user"] + "');" + '\n'
+            line = "define('DB_NAME', '" + params["dbname"] + "');" + '\n'
 
         elif re.match(r"define\('DB_USER", line):
+            line = "define('DB_USER', '" + params["user"] + "');" + '\n'
+
+        elif re.match(r"define\('DB_PASSWORD", line):
             line = "define('DB_PASSWORD', '" + params["password"] + "');" + '\n'
 
         elif re.match(r"define\('DB_HOST", line):
