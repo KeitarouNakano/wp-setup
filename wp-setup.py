@@ -19,7 +19,6 @@ def main():
     print getParam("mysql", "password")
     print getParam("mysql", "host")
     print getParam("init", "version")
-    print getParam("init", "path")
 
     version = getParam("init", "version")
     path = getParam("init", "path")
@@ -32,6 +31,7 @@ def main():
 
     if(not path.endswith("/")):
         path = path + "/"
+    print path
 
     #getWP(version, path)
 
@@ -58,7 +58,7 @@ def replaceWPData(params, salt):
     f_output.close()
 
 def getSalt():
-    salt = urllib.urlopen(salturl).read()
+    salt = urllib.urlopen(salturl).read().split()
 
     return salt
 
