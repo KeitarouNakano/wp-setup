@@ -25,9 +25,9 @@ def main():
     path = getParam("init", "path")
 
     params = {\
-        'user', getParam("mysql", "user"), \
-        'host', getParam("mysql", "host"), \
-        'password', getParam("mysql", "password")
+        'user': getParam("mysql", "user"), \
+        'host': getParam("mysql", "host"), \
+        'password': getParam("mysql", "password")
     }
 
     if(not path.endswith("/")):
