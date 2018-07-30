@@ -57,7 +57,7 @@ def replaceWPData(params):
     f_output.close()
 
 def getSalt():
-    salt = urllib.request.urlopen(salturl).read()
+    salt = urllib.urlopen(salturl).read()
     return salt
 
 def getWP(ver, path):
