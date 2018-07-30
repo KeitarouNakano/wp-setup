@@ -36,7 +36,7 @@ def main():
     #getWP(version, path)
 
     salt = getSalt()
-    salt[0]
+    salt[0][0]
     print salt
     #replaceWPData(params, salt)
 
