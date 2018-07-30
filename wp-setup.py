@@ -33,7 +33,7 @@ def main():
     if(not path.endswith("/")):
         path = path + "/"
 
-    getWP(version, path)
+    #getWP(version, path)
 
     salt = getSalt()
     salt[0]
