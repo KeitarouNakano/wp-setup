@@ -22,9 +22,9 @@ def main():
     path = getParam("init", "path")
 
     params = {
-        'dbname': getParam("mysql", "dbname"),
-        'user': getParam("mysql", "user"),
-        'host': getParam("mysql", "host"),
+        'dbname'  : getParam("mysql", "dbname"),
+        'user'    : getParam("mysql", "user"),
+        'host'    : getParam("mysql", "host"),
         'password': getParam("mysql", "password")
     }
 
