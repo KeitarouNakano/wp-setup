@@ -15,24 +15,20 @@ salturl = 'https://api.wordpress.org/secret-key/1.1/salt/'
 path = ''
 
 def main():
-    print getParam("mysql", "user")
-    print getParam("mysql", "password")
-    print getParam("mysql", "host")
-    print getParam("init", "version")
 
     version = getParam("init", "version")
     path = getParam("init", "path")
 
-    params = {\
-        'dbname': getParam("mysql", "dbname"), \
-        'user': getParam("mysql", "user"), \
-        'host': getParam("mysql", "host"), \
+    params = {
+        'dbname': getParam("mysql", "dbname"),
+        'user': getParam("mysql", "user"),
+        'host': getParam("mysql", "host"),
         'password': getParam("mysql", "password")
     }
 
     if(not path.endswith("/")):
         path = path + "/"
-    print path
+    print "wordpress install to " + path
 
     getWP(version, path)
 
@@ -47,43 +43,33 @@ def getParam(section, param_name):
 
 def replaceWPConfig(path, params, salt):
 
+    print "set wordpress config data"
     f_input = open(path + 'wp-config-sample.php')
     f_output = open(path + 'wp-config.php', 'w')
 
     for line in f_input:
         if re.match(r"define\('DB_NAME", line):
             line = "define('DB_NAME', '" + params["dbname"] + "');" + '\n'
-
         elif re.match(r"define\('DB_USER", line):
             line = "define('DB_USER', '" + params["user"] + "');" + '\n'
-
         elif re.match(r"define\('DB_PASSWORD", line):
             line = "define('DB_PASSWORD', '" + params["password"] + "');" + '\n'
-
         elif re.match(r"define\('DB_HOST", line):
             line = "define('DB_HOST', '" + params["host"] + "');" + '\n'
-
         elif re.match(r"define\('AUTH_KEY'", line):
             line = salt[0] + '\n'
-
         elif re.match(r"define\('SECURE_AUTH_KEY'", line):
             line = salt[1] + '\n'
-
         elif re.match(r"define\('LOGGED_IN_KEY'", line):
             line = salt[2] + '\n'
-
         elif re.match(r"define\('NONCE_KEY'", line):
             line = salt[3] + '\n'
-
         elif re.match(r"define\('AUTH_SALT'", line):
             line = salt[4] + '\n'
-
         elif re.match(r"define\('SECURE_AUTH_SALT'", line):
             line = salt[5] + '\n'
-
         elif re.match(r"define\('LOGGED_IN_SALT'", line):
             line = salt[6] + '\n'
-
         elif re.match(r"define\('NONCE_SALT'", line):
             line = salt[7] + '\n'
 
@@ -94,7 +80,6 @@ def replaceWPConfig(path, params, salt):
 
 def getSalt():
     salt = urllib.urlopen(salturl).read().split("\n")
-
     return salt
 
 def getWP(ver, path):
@@ -120,21 +105,21 @@ def getWP(ver, path):
     print "done."
 
     # move to setup directory
-
     srcdir = tmpdir + "wordpress/"
     files = os.listdir(srcdir)
     for fname in files:
-        print "copy from " + srcdir + fname + " to " + path
+        print "move from " + srcdir + fname + " to " + path
         shutil.move(srcdir + fname, path)
 
-    print "delete tmp file. " + tmpdir + filename
+    print "delete tmp file " + tmpdir + filename
     os.remove(tmpdir + filename)
 
-    print "delete tmp dir. " + tmpdir + "wordpress/"
+    print "delete tmp dir " + tmpdir + "wordpress/"
     os.removedirs(tmpdir + "wordpress/")
 
 def untar(fname):
     if (fname.endswith("tar.gz")):
+        print "untar " + fname
         tar = tarfile.open(fname)
         tar.extractall(tmpdir)
         tar.close()
