@@ -4,6 +4,8 @@
 import sys
 import os
 import re
+import pwd
+import grp
 import shutil
 import urllib
 import tarfile
@@ -35,11 +37,24 @@ def main():
     salt = getSalt()
     replaceWPConfig(path, params, salt)
 
+    setPermission(path)
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
     parser.read(configfile)
     return parser.get(section, param_name)
+
+def setPermission(path):
+    print "set owner and group"
+
+    uid = pwd.getpwnam(getParam("init", "user")).pw_uid
+    gid = grp.getgrnam(getParam("init", "group")).gr_gid
+
+    files = os.listdir(path)
+    for file in files:
+        os.chown(path + file, uid, gid)
+
+    os.chmod(path + "wp-content/", 0777)
 
 def replaceWPConfig(path, params, salt):
 
