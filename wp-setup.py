@@ -55,6 +55,8 @@ def setPermission(path):
         os.chown(path + file, uid, gid)
 
     os.chmod(path + "wp-content/", 0777)
+    os.chmod(path + "wp-content/plugins/", 0777)
+    os.chmod(path + "wp-content/themes/", 0777)
 
 def replaceWPConfig(path, params, salt):
 
