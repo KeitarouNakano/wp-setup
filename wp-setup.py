@@ -51,16 +51,16 @@ def getParam(section, param_name):
 def setHtaccess(path, basic_auth):
     f_output = open(path + '.htaccess', 'a')
 
-    f_output.write('# BEGIN WordPress')
-    f_output.write('<IfModule mod_rewrite.c>')
-    f_output.write('RewriteEngine On')
-    f_output.write('RewriteBase /')
-    f_output.write('RewriteRule ^index\.php$ - [L]')
-    f_output.write('RewriteCond %{REQUEST_FILENAME} !-f')
-    f_output.write('RewriteCond %{REQUEST_FILENAME} !-d')
-    f_output.write('RewriteRule . /index.php [L]')
-    f_output.write('</IfModule>')
-    f_output.write('# END WordPress')
+    f_output.write('# BEGIN WordPress\n')
+    f_output.write('<IfModule mod_rewrite.c>\n')
+    f_output.write('RewriteEngine On\n')
+    f_output.write('RewriteBase /\n')
+    f_output.write('RewriteRule ^index\.php$ - [L]\n')
+    f_output.write('RewriteCond %{REQUEST_FILENAME} !-f\n')
+    f_output.write('RewriteCond %{REQUEST_FILENAME} !-d\n')
+    f_output.write('RewriteRule . /index.php [L]\n')
+    f_output.write('</IfModule>\n')
+    f_output.write('# END WordPress\n')
 
     f_output.close()
 
