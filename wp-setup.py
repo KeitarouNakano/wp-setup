@@ -9,6 +9,7 @@ import grp
 import shutil
 import urllib
 import tarfile
+from crypt import crypt
 from ConfigParser import SafeConfigParser
 
 configfile = 'config.ini'
@@ -20,6 +21,7 @@ def main():
 
     version = getParam("init", "version")
     path = getParam("init", "path")
+    basic_auth = getParam("init", "basic_auth")
 
     params = {
         'dbname'  : getParam("mysql", "dbname"),
@@ -37,12 +39,30 @@ def main():
     salt = getSalt()
     replaceWPConfig(path, params, salt)
 
+    setHtaccess(path, basic_auth)
+
     setPermission(path)
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
     parser.read(configfile)
     return parser.get(section, param_name)
+
+def setHtaccess(path):
+    f_output = open(path + '.htaccess', 'a')
+
+    f_output.write('# BEGIN WordPress')
+    f_output.write('<IfModule mod_rewrite.c>')
+    f_output.write('RewriteEngine On')
+    f_output.write('RewriteBase /')
+    f_output.write('RewriteRule ^index\.php$ - [L]')
+    f_output.write('RewriteCond %{REQUEST_FILENAME} !-f')
+    f_output.write('RewriteCond %{REQUEST_FILENAME} !-d')
+    f_output.write('RewriteRule . /index.php [L]')
+    f_output.write('</IfModule>')
+    f_output.write('# END WordPress')
+
+    f_output.close()
 
 def setPermission(path):
     print "set owner and group"
