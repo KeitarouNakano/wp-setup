@@ -48,7 +48,7 @@ def getParam(section, param_name):
     parser.read(configfile)
     return parser.get(section, param_name)
 
-def setHtaccess(path):
+def setHtaccess(path, basic_auth):
     f_output = open(path + '.htaccess', 'a')
 
     f_output.write('# BEGIN WordPress')
