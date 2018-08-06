@@ -104,7 +104,7 @@ def setPermission(path):
     gid = grp.getgrnam(getParam("init", "group")).gr_gid
 
     for file in findAllFiles(path):
-        os.chown(path + file, uid, gid)
+        os.chown(file, uid, gid)
 
     os.chmod(path + "wp-content/", 0777)
     os.chmod(path + "wp-content/plugins/", 0777)
