@@ -71,7 +71,7 @@ def setHtaccess(path, basic_auth):
 
     f_output = open(path + '.htaccess', 'a')
 
-    f_output.write('#Generate by wp-setup.py')
+    f_output.write('#Generate by wp-setup.py\n')
     f_output.write('\n# BEGIN WordPress\n')
     f_output.write('<IfModule mod_rewrite.c>\n')
     f_output.write('RewriteEngine On\n')
@@ -84,12 +84,12 @@ def setHtaccess(path, basic_auth):
     f_output.write('# END WordPress\n')
 
     if basic_auth :
-        f_output.write('\n#Generate by wp-setup.py')
-        f_output.write('AuthUserfile ' + path + '.htpasswd')
-        f_output.write('AuthGroupfile /dev/null')
-        f_output.write('AuthName "Please enter your ID and password"')
-        f_output.write('AuthType Basic')
-        f_output.write('require valid-user')
+        f_output.write('\n#Generate by wp-setup.py\n')
+        f_output.write('AuthUserfile ' + path + '.htpasswd\n')
+        f_output.write('AuthGroupfile /dev/null\n')
+        f_output.write('AuthName "Please enter your ID and password"\n')
+        f_output.write('AuthType Basic\n')
+        f_output.write('require valid-user\n')
 
     f_output.close()
 
