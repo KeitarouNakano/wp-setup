@@ -51,9 +51,11 @@ def main():
     print "A setup of wordpress has been completed."
 
     if basic_auth :
+        print "--------"
         print "Basic auth info"
         print "username : " + basic_username
         print "password : " + pswd
+        print "--------"
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
