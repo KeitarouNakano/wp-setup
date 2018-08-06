@@ -112,7 +112,7 @@ def setPermission(path):
 
 def findAllFiles(dir):
     for root, dirs, files in os.walk(dir):
-        yield root
+        #yield root
         for file in files:
             yield os.path.join(root, file)
 
