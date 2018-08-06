@@ -6,6 +6,7 @@ import os
 import re
 import pwd
 import grp
+import random, string
 import shutil
 import urllib
 import tarfile
@@ -16,12 +17,16 @@ configfile = 'config.ini'
 tmpdir = '/tmp/'
 salturl = 'https://api.wordpress.org/secret-key/1.1/salt/'
 path = ''
+basic_username = 'wpadmin'
 
 def main():
 
     version = getParam("init", "version")
     path = getParam("init", "path")
-    basic_auth = getParam("init", "basic_auth")
+    if getParam("init", "basic_auth") == "true":
+        basic_auth = True
+    else :
+        basic_auth = False
 
     params = {
         'dbname'  : getParam("mysql", "dbname"),
@@ -39,9 +44,16 @@ def main():
     salt = getSalt()
     replaceWPConfig(path, params, salt)
 
-    setHtaccess(path, basic_auth)
+    pswd = setHtaccess(path, basic_auth)
 
     setPermission(path)
+
+    print "A setup of wordpress has been completed."
+
+    if basic_auth :
+        print "Basic auth info"
+        print "username : " + basic_username
+        print "password : " + pswd
 
 def getParam(section, param_name):
     parser = SafeConfigParser()
@@ -49,9 +61,18 @@ def getParam(section, param_name):
     return parser.get(section, param_name)
 
 def setHtaccess(path, basic_auth):
+    pswd = ''
+
+    if basic_auth :
+        pswd = ''.join([random.choice(string.ascii_letters + string.digits) for i in range(12)])
+        htpasswd = open(path + '.htpasswd', 'a')
+        htpasswd.write(basic_username + ":" + pswd)
+        htpasswd.close()
+
     f_output = open(path + '.htaccess', 'a')
 
-    f_output.write('# BEGIN WordPress\n')
+    f_output.write('#Generate by wp-setup.py')
+    f_output.write('\n# BEGIN WordPress\n')
     f_output.write('<IfModule mod_rewrite.c>\n')
     f_output.write('RewriteEngine On\n')
     f_output.write('RewriteBase /\n')
@@ -62,7 +83,17 @@ def setHtaccess(path, basic_auth):
     f_output.write('</IfModule>\n')
     f_output.write('# END WordPress\n')
 
+    if basic_auth :
+        f_output.write('\n#Generate by wp-setup.py')
+        f_output.write('AuthUserfile ' + path + '.htpasswd')
+        f_output.write('AuthGroupfile /dev/null')
+        f_output.write('AuthName "Please enter your ID and password"')
+        f_output.write('AuthType Basic')
+        f_output.write('require valid-user')
+
     f_output.close()
+
+    return pswd
 
 def setPermission(path):
     print "set owner and group"
