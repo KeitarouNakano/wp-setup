@@ -103,13 +103,19 @@ def setPermission(path):
     uid = pwd.getpwnam(getParam("init", "user")).pw_uid
     gid = grp.getgrnam(getParam("init", "group")).gr_gid
 
-    files = os.listdir(path)
-    for file in files:
-        os.chown(path + file, uid, gid)
+    for file in findAllFiles(path):
+        #os.chown(path + file, uid, gid)
+        print "set owner file : " + file
 
     os.chmod(path + "wp-content/", 0777)
     os.chmod(path + "wp-content/plugins/", 0777)
     os.chmod(path + "wp-content/themes/", 0777)
+
+def findAllFiles(dir):
+    for root, dirs, files in os.walk(dir):
+        yield root
+        for file in files:
+            yield os.path.join(root, file)
 
 def replaceWPConfig(path, params, salt):
 
