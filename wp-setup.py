@@ -115,7 +115,8 @@ def findAllFiles(dir):
     for root, dirs, files in os.walk(dir):
         #if root == installpath:
         #    continue
-        print dir
+        print "root: " + root
+        print "dir: "  + dir
         yield root
         for file in files:
             yield os.path.join(root, file)
