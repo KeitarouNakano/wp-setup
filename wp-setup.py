@@ -6,7 +6,8 @@ import os
 import re
 import pwd
 import grp
-import random, string
+import random
+import string
 import shutil
 import urllib
 import tarfile
@@ -111,12 +112,10 @@ def setPermission(path):
     os.chmod(path + "wp-content/themes/", 0777)
 
 def findAllFiles(dir):
-    installpath = dir
     for root, dirs, files in os.walk(dir):
-        #if root == installpath:
-        #    continue
-        print "root: " + root
-        print "dir: "  + dir
+        if root == dir:
+            continue
+
         yield root
         for file in files:
             yield os.path.join(root, file)
