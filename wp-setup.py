@@ -113,8 +113,9 @@ def setPermission(path):
 def findAllFiles(dir):
     installpath = dir
     for root, dirs, files in os.walk(dir):
-        if root == installpath:
-            continue
+        #if root == installpath:
+        #    continue
+        print dir
         yield root
         for file in files:
             yield os.path.join(root, file)
