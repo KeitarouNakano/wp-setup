@@ -113,8 +113,8 @@ def setPermission(path):
 
 def findAllFiles(dir):
     for root, dirs, files in os.walk(dir):
-        if root == dir:
-            continue
+        #if root == dir:
+        #    continue
 
         yield root
         for file in files:
@@ -174,8 +174,6 @@ def getWP(ver, path):
         filename = "wordpress-" + ver + "-ja.tar.gz"
     else :
         filename = "latest-ja.tar.gz"
-
-    print tmpdir + filename
 
     # download wordpress and untar
     print "downloading... " + url + filename
