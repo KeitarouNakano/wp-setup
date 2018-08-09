@@ -1,8 +1,6 @@
 wp-setup
 =====
 
-Overview
-
 ## Description
 WordPress is downloaded and it's arranged in a specific directory.
 Setting of DB and a presence of BASIC authentication can be established in config.ini.
