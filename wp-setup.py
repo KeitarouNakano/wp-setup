@@ -67,9 +67,9 @@ def setHtaccess(path, basic_auth):
     pswd = ''
 
     if basic_auth :
-        pswd = crypt(''.join([random.choice(string.ascii_letters + string.digits) for i in range(12)]), 'generate_pswd')
+        pswd = ''.join([random.choice(string.ascii_letters + string.digits) for i in range(12)])
         htpasswd = open(path + '.htpasswd', 'a')
-        htpasswd.write(basic_username + ":" + pswd)
+        htpasswd.write(basic_username + ":" + crypt(pswd, 'generate_pswd'))
         htpasswd.close()
 
     f_output = open(path + '.htaccess', 'a')
