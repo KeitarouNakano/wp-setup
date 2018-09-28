@@ -79,6 +79,7 @@ def setHtaccess(path, basic_auth):
     f_output.write('<IfModule mod_rewrite.c>\n')
     f_output.write('RewriteEngine On\n')
     f_output.write('RewriteBase /\n')
+    f_output.write('RewriteRule ^xmlrpc\.php$ "http\:\/\/0\.0\.0\.0\/" [R=301,L]\n')
     f_output.write('RewriteRule ^index\.php$ - [L]\n')
     f_output.write('RewriteCond %{REQUEST_FILENAME} !-f\n')
     f_output.write('RewriteCond %{REQUEST_FILENAME} !-d\n')
