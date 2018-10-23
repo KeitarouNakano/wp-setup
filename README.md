@@ -50,6 +50,6 @@ exec
 
 ## Install
 ```
-wget https://gitlab01.z-hosts.com/nakano/wp-setup/repository/archive.zip -O wp-setup.zip && unzip wp-setup.zip && mv wp-setup-master-* wp-setup
+wget https://gitlab01.z-hosts.com/nakano/wp-setup/repository/archive.zip -O wp-setup.zip && unzip wp-setup.zip -d wp-setup
 
 ```
